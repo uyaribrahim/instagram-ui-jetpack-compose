@@ -17,6 +17,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.paddingFromBaseline
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
@@ -41,6 +42,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -59,6 +61,33 @@ fun Profile() {
                 .fillMaxWidth()
         )
         Spacer(modifier = Modifier.height(20.dp))
+        HighlightSection(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 20.dp),
+            highlights = listOf(
+                StoryHighlight(
+                    image = painterResource(id = R.drawable.jetpack_compose),
+                    text = "GitHub"
+                ),
+                StoryHighlight(
+                    image = painterResource(id = R.drawable.jetpack_compose),
+                    text = "Compose"
+                ),
+                StoryHighlight(
+                    image = painterResource(id = R.drawable.jetpack_compose),
+                    text = "LinkedIn"
+                ),
+                StoryHighlight(
+                    image = painterResource(id = R.drawable.jetpack_compose),
+                    text = "Kotlin"
+                ),
+                StoryHighlight(
+                    image = painterResource(id = R.drawable.jetpack_compose),
+                    text = "Android"
+                )
+            )
+        )
     }
 }
 
@@ -110,7 +139,7 @@ fun ProfileSection(
                 .fillMaxWidth()
                 .padding(horizontal = 18.dp)
         ) {
-            ProfileImage(
+            RoundImage(
                 image = painterResource(id = R.drawable.ibrahim),
                 modifier = Modifier
                     .size(88.dp)
@@ -127,7 +156,7 @@ fun ProfileSection(
 }
 
 @Composable
-fun ProfileImage(
+fun RoundImage(
     image: Painter, modifier: Modifier = Modifier
 ) {
     Image(
@@ -302,4 +331,34 @@ fun ActionButton(
 
     }
 
+}
+
+@Composable
+fun HighlightSection(
+    modifier: Modifier = Modifier,
+    highlights: List<StoryHighlight>
+) {
+    LazyRow(
+        modifier = modifier,
+        horizontalArrangement = Arrangement.Center
+    ) {
+        items(highlights.size) {
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Center,
+                modifier = Modifier.padding(end = 18.dp)
+            ) {
+                RoundImage(
+                    image = highlights[it].image,
+                    modifier = Modifier.size(70.dp)
+                )
+                Text(
+                    text = highlights[it].text,
+                    overflow = TextOverflow.Ellipsis,
+                    textAlign = TextAlign.Center
+                )
+
+            }
+        }
+    }
 }
