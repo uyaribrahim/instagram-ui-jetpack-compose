@@ -26,8 +26,14 @@ import androidx.compose.material.icons.filled.ArrowDropDown
 import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
+import androidx.compose.material3.Tab
+import androidx.compose.material3.TabRow
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -51,6 +57,9 @@ import androidx.compose.ui.unit.sp
 @Preview(showBackground = true)
 @Composable
 fun Profile() {
+    var selectedTabIndex by remember {
+        mutableStateOf(0)
+    }
     Column(modifier = Modifier.fillMaxSize()) {
         Header(name = "ibrhm_uyar")
         Spacer(modifier = Modifier.height(5.dp))
@@ -88,6 +97,26 @@ fun Profile() {
                 )
             )
         )
+        Spacer(modifier = Modifier.height(15.dp))
+        TabView(
+            tabs = listOf(
+                ProfileTabs(
+                    image = painterResource(id = R.drawable.ic_grid),
+                    text = "Posts"
+                ),
+                ProfileTabs(
+                    image = painterResource(id = R.drawable.ic_reels),
+                    text = "Reels"
+                ),
+                ProfileTabs(
+                    image = painterResource(id = R.drawable.profile),
+                    text = "Profile"
+                ),
+            )
+        ) {
+            selectedTabIndex = it
+        }
+
     }
 }
 
@@ -148,6 +177,7 @@ fun ProfileSection(
             Spacer(modifier = Modifier.width(14.dp))
             StatContainer(modifier = Modifier.weight(7f))
         }
+        Spacer(modifier = Modifier.height(8.dp))
         Description(
             "İbrahim Uyar", "Software Developer", "uyaribrahim.com",
             listOf("daftpunk", "androidev"), 13
@@ -360,5 +390,44 @@ fun HighlightSection(
 
             }
         }
+    }
+}
+
+@Composable
+fun TabView(
+    modifier: Modifier = Modifier,
+    tabs: List<ProfileTabs>,
+    onTabSelected: (selectedIndex: Int) -> Unit
+) {
+    var selectedTabIndex by remember {
+        mutableStateOf(0)
+    }
+    val defaultColor = Color(0xFF7777777)
+    TabRow(
+        selectedTabIndex = selectedTabIndex,
+        containerColor = Color.Transparent,
+        contentColor = Color.Black,
+        modifier = modifier
+
+    ) {
+        tabs.forEachIndexed { index, profileTabs ->
+            Tab(selected = selectedTabIndex == index,
+                selectedContentColor = Color.Black,
+                unselectedContentColor = defaultColor,
+                onClick = {
+                    selectedTabIndex = index
+                    onTabSelected(index)
+                }) {
+                Icon(
+                    painter = profileTabs.image,
+                    contentDescription = profileTabs.text,
+                    tint = if (selectedTabIndex == index) Color.Black else defaultColor,
+                    modifier = Modifier
+                        .padding(8.dp)
+                        .size(20.dp)
+                )
+            }
+        }
+
     }
 }
