@@ -1,6 +1,5 @@
 package com.iuyar.instagramuicompose
 
-import androidx.compose.animation.VectorConverter
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -14,7 +13,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.paddingFromBaseline
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyRow
@@ -22,28 +20,23 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.material.icons.filled.ArrowDropDown
 import androidx.compose.material.icons.filled.KeyboardArrowDown
-import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Tab
 import androidx.compose.material3.TabRow
 import androidx.compose.material3.Text
+import androidx.compose.material3.contentColorFor
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.Outline
-import androidx.compose.ui.graphics.Shape
-import androidx.compose.ui.graphics.painter.BitmapPainter
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.modifier.ModifierLocalReadScope
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
@@ -130,30 +123,45 @@ fun Header(
         horizontalArrangement = Arrangement.SpaceAround,
         modifier = modifier
             .fillMaxWidth()
-            .padding(top = 18.dp)
+            .padding(top = 18.dp).padding(horizontal = 20.dp)
     ) {
-        Icon(
+        /*Icon(
             imageVector = Icons.Default.ArrowBack, contentDescription = "Back",
             modifier = Modifier.size(24.dp),
             tint = Color.Black
-        )
-        Text(
-            text = name, overflow = TextOverflow.Ellipsis,
-            fontWeight = FontWeight.Bold,
-            fontSize = 20.sp
-        )
-        Icon(
-            painter = painterResource(id = R.drawable.ic_notifications),
-            contentDescription = "Back",
-            modifier = Modifier.size(24.dp),
-            tint = Color.Black
-        )
-        Icon(
-            painter = painterResource(id = R.drawable.ic_dots),
-            contentDescription = "Back",
-            modifier = Modifier.size(20.dp),
-            tint = Color.Black
-        )
+        )*/
+        Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.weight(8f)) {
+            Text(
+                text = name, overflow = TextOverflow.Ellipsis,
+                fontWeight = FontWeight.Bold,
+                fontSize = 20.sp
+            )
+            Icon(
+                imageVector = Icons.Default.KeyboardArrowDown,
+                contentDescription = "",
+                tint = Color.Black
+            )
+        }
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.SpaceBetween,
+            modifier = Modifier
+                .weight(2f)
+        ) {
+            Icon(
+                painter = painterResource(id = R.drawable.outline_add),
+                contentDescription = "Back",
+                modifier = Modifier.size(24.dp),
+                tint = Color.Black
+            )
+            Icon(
+                painter = painterResource(id = R.drawable.outline_menu),
+                contentDescription = "Back",
+                modifier = Modifier.size(24.dp),
+                tint = Color.Black
+            )
+        }
+
     }
 }
 
@@ -412,7 +420,7 @@ fun TabView(
     ) {
         tabs.forEachIndexed { index, profileTabs ->
             Tab(selected = selectedTabIndex == index,
-                selectedContentColor = Color.Black,
+                selectedContentColor = contentColorFor(Color.Black),
                 unselectedContentColor = defaultColor,
                 onClick = {
                     selectedTabIndex = index
