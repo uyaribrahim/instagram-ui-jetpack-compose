@@ -1,8 +1,8 @@
-package com.iuyar.instagramuicompose
+package com.iuyar.instagramuicompose.model
 
 import androidx.compose.ui.graphics.painter.Painter
 
-data class StoryHighlight(
+data class ProfileTabs(
     val image: Painter,
     val text: String
 )
